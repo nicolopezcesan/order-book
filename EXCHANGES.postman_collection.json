@@ -1,0 +1,116 @@
+{
+	"info": {
+		"_postman_id": "06b81b8f-3910-460e-8e90-c74d9aba91df",
+		"name": "EXCHANGES",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19677045"
+	},
+	"item": [
+		{
+			"name": "binance (external)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.binance.com/api/v3/depth?limit=2&symbol=BTCUSDT",
+					"protocol": "https",
+					"host": [
+						"api",
+						"binance",
+						"com"
+					],
+					"path": [
+						"api",
+						"v3",
+						"depth"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "2"
+						},
+						{
+							"key": "symbol",
+							"value": "BTCUSDT"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "bitmart (external)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api-cloud.bitmart.com/spot/quotation/v3/books?limit=1&symbol=BTC_USDT",
+					"protocol": "https",
+					"host": [
+						"api-cloud",
+						"bitmart",
+						"com"
+					],
+					"path": [
+						"spot",
+						"quotation",
+						"v3",
+						"books"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "1"
+						},
+						{
+							"key": "symbol",
+							"value": "BTC_USDT"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "order-book",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/order-book?exchange=BINANCE&base_coin=ETH&quote_coin=USDT",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"order-book"
+					],
+					"query": [
+						{
+							"key": "exchange",
+							"value": "BINANCE",
+							"description": "BINANCE - BITMART"
+						},
+						{
+							"key": "base_coin",
+							"value": "ETH",
+							"description": "required"
+						},
+						{
+							"key": "quote_coin",
+							"value": "USDT",
+							"description": "required"
+						},
+						{
+							"key": "limit",
+							"value": "3",
+							"description": "optional (default 20)",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

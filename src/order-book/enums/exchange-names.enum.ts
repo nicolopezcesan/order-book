@@ -1,0 +1,4 @@
+export enum EEXCHANGE_NAMES {
+  BINANCE = 'BINANCE',
+  BITMART = 'BITMART',
+};
