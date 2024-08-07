@@ -1,14 +1,14 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { OrderBookController } from './order-book.controller';
 // import { ExchangeServiceFactory } from 'src/order-book/services/factory-exchange.service';
-import { EEXCHANGE_NAMES } from 'src/order-book/enums/exchange-names.enum';
+import { EXCHANGE_NAMES } from 'src/order-book/enums/exchange-names.enum';
 import { BinanceService } from 'src/order-book/services/binance-exchange.service';
 import { BitmartService } from 'src/order-book/services/bitmart-exchange.service';
-import { BinanceOrderBookModel } from 'src/order-book/models/binance-exchange.model';
+import { BinanceOrderBookEntity } from 'src/order-book/entities/binance-exchange.entity';
 import { getOrderBookDto } from 'src/order-book/dto/get-order-book.dto';
 import { ExchangeServiceFactory } from 'src/order-book/services/exchange-service-factory';
 import { HttpException } from '@nestjs/common';
-import { BitmartOrderBookModel } from 'src/order-book/models/bitmart-exchange.model';
+import { BitmartOrderBookModel } from 'src/order-book/entities/bitmart-exchange.entity';
 
 describe('OrderBookController', () => {
   let orderBookController: OrderBookController;
@@ -27,10 +27,10 @@ describe('OrderBookController', () => {
   });
 
   describe('getOrderBook', () => {
-    it('should return order book data model of type BinanceOrderBookModel', async () => {
+    it('should return order book data model of type BinanceOrderBookEntity', async () => {
       const mockRequest: getOrderBookDto = {
         limit: '2',
-        exchange: EEXCHANGE_NAMES.BINANCE,
+        exchange: EXCHANGE_NAMES.BINANCE,
         base_coin: 'BTC',
         quote_coin: 'USDT'
       };
@@ -39,7 +39,7 @@ describe('OrderBookController', () => {
 
       const response = await orderBookController.getOrderBook(mockRequest);
 
-      expect(response instanceof BinanceOrderBookModel).toBe(true);
+      expect(response instanceof BinanceOrderBookEntity).toBe(true);
 
       expect(response).toHaveProperty('timestamp');
       expect(response).toHaveProperty('bids');
