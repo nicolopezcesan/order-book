@@ -1,24 +1,32 @@
 import axios from "axios";
-import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
+import { HttpException, HttpStatus, Inject, Injectable } from "@nestjs/common";
 import { EXCHANGE_CONFIG } from "../constants/exchange-config.enum";
 import { EXCHANGE_NAMES } from "../enums/exchange-names.enum";
 import { getOrderBookDto } from "../dto/get-order-book.dto";
-import { ExchangeEntityFactory } from "../entities/exchange-factory.entity";
+import { BinanceOrderBookEntity } from "../entities/binance-exchange.entity";
+import { BitmartOrderBookEntity } from "../entities/bitmart-exchange.entity";
 
-export interface IExchangeService<T> {
-  getOrderBook(getOrderBookDto: getOrderBookDto): Promise<T>;
+export interface IExchangeService {
+  getOrderBook(getOrderBookDto: getOrderBookDto): Promise<TExchangeEntity>;
 }
 
+export type TExchangeEntity = BinanceOrderBookEntity | BitmartOrderBookEntity;
+
+export type OrderBookEntityCreator = (data: any) => TExchangeEntity;
+
 @Injectable()
-export abstract class AbstractExchangeService<T> implements IExchangeService<T> {
-  private exchange: EXCHANGE_NAMES;
+export abstract class AbstractExchangeService implements IExchangeService {
   public baseUrl: string;
   public pairFormat: string;
+  public orderBookEntity: OrderBookEntityCreator;
 
-  constructor(exchange: EXCHANGE_NAMES) {
-    this.exchange = exchange;
+  constructor(
+    exchange: EXCHANGE_NAMES,
+    orderBookEntity: OrderBookEntityCreator
+  ) {
     this.baseUrl = EXCHANGE_CONFIG[exchange].URL;
     this.pairFormat = EXCHANGE_CONFIG[exchange].PAIR_FORMAT;
+    this.orderBookEntity = orderBookEntity;
   }
 
   getSymbol(base_coin: string, quote_coin: string): string {
@@ -27,17 +35,14 @@ export abstract class AbstractExchangeService<T> implements IExchangeService<T> 
       .replace(/:quote_coin/g, quote_coin);
   }
 
-  async getOrderBook(getOrderBookDto: getOrderBookDto): Promise<T> {
+  async getOrderBook(getOrderBookDto: getOrderBookDto): Promise<TExchangeEntity> {
     try {
       const { base_coin, quote_coin, limit } = getOrderBookDto;
       const symbol = this.getSymbol(base_coin, quote_coin);
 
       const request = { params: { limit, symbol } };
-      // add service that let us handle endpoint in each service and return his own entity
-      const response = await axios.get(this.baseUrl, request); 
-
-      const Entity = this.exchangeServiceFactory.getEntity(this.exchange);
-      return new Entity(response);
+      const response = await axios.get(this.baseUrl, request);
+      return this.orderBookEntity(response.data);
     } catch (error) {
       throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }

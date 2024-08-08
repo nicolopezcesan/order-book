@@ -11,12 +11,11 @@ export class OrderBookController {
   @Get('/')
   async getOrderBook(@Query() orderBookDto: getOrderBookDto) {
     try {
-      const { exchange } = orderBookDto;
-      const exchangeService = this.exchangeServiceFactory.getService(exchange);
-      return await exchangeService.getOrderBook(orderBookDto);
+      const exchangeService = this.exchangeServiceFactory.getService(orderBookDto.exchange);
+      const response = await exchangeService.getOrderBook(orderBookDto);
+      return response;
     } catch (error) {
       throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
-
 }

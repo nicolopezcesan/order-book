@@ -5,9 +5,12 @@ import { EXCHANGE_NAMES } from '../enums/exchange-names.enum';
 import { AbstractExchangeService } from './exchange-abstract.service';
 
 @Injectable()
-export class BinanceService extends AbstractExchangeService<BinanceOrderBookEntity> {
+export class BinanceService extends AbstractExchangeService {
   constructor() {
-    super(EXCHANGE_NAMES.BINANCE);
+    super(
+      EXCHANGE_NAMES.BINANCE,
+      (data) => new BinanceOrderBookEntity(data)
+    );
   }
 }
 
