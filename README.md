@@ -1,18 +1,21 @@
 
 # 🔄 Exchange Order Book
 
-## 📝 Notas
+## 📝 Notes
 
-Este repositorio corresponde a la solución para un challenge técnico.
+This repository corresponds to the solution of a technical challenge.
 
-La implementación es una API que permite obtener el libro de órdenes para cualquier par symbol de cryptomonedas ingresando dicho par y el nombre del exchange que se desea consultar. 
+The implementation is an API that allows obtaining the order book of any cryptocurrency pair symbol through different exchanges.
 
-Se disponibiliza un endpoint GET /orderBook que espera recibir como query param el par symbol (BTCUSDT, EHTUSDT, etc), nombre del exchange, y como agregado establecer el límite de filas esperadas en la respuesta.
+A GET /orderBook endpoint is available that expects to receive as a query parameter the symbol of the pair, name of the exchange and also allows defining the limit of rows expected in the response.
+
 
 --
   
 
-### 📢 Ejemplo CURL:
+### 📢 Example CURL:
+
+To interact with this service, you can use the following CURL command:
 
 Para interactuar este servicio, puedes utilizar el siguiente comando CURL:
 ```bash
