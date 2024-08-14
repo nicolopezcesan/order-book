@@ -1,17 +1,25 @@
 
-CHALLENGE - EXCHANGES - ORDER BOOKS
+# 🔄 Exchange Order Book
 
-## Notas
+## 📝 Notas
 
-Hay ciertos ajustes que no fueron implementados, pero me gustaría aclarar que soy consciente de que existen, como por ejemplo:
+Este repositorio corresponde a la solución para un challenge técnico.
 
-- Los valores de configuración de cada exchange deberian pasarse a variables de entorno
+La implementación es una API que permite obtener el libro de órdenes para cualquier par symbol de cryptomonedas ingresando dicho par y el nombre del exchange que se desea consultar. 
 
-- Manejar excepciones de manera que se pueda conocer con mayor exactitud la profundida del error y desde dónde proviene.
+Se disponibiliza un endpoint GET /orderBook que espera recibir como query param el par symbol (BTCUSDT, EHTUSDT, etc), nombre del exchange, y como agregado establecer el límite de filas esperadas en la respuesta.
 
-- Para la respuesta, si bien definí una estructura estándar para las response (a través de modelos) faltaría agregar status code, y alguna respuesta global a nivel api. Con respecto a la respuesta del modelo, se debería ajustar el tipo de dato que se está devolviendo para las diferentes propiedades, donde varían según el exchange. Ejemplo, los timestamp (un servicio lo devuelve como string y otro como number), o incluso estandarizar la cantidad de decimales para los valores de precio y cantidad de las ordenes.
+--
+  
 
-- Para los tests debería agregar tests para todas las casuisticas posibles, y usar un mock en vez de apuntar al servicio real como funciona actualmente.
+### 📢 Ejemplo CURL:
+
+Para interactuar este servicio, puedes utilizar el siguiente comando CURL:
+```bash
+curl --location '{{LOCAL_API}}/order-book?exchange=BINANCE&base_coin=ETH&quote_coin=USDT&limit=5'
+```
+
+--
 
 ## Installation
 
