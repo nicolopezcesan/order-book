@@ -1,10 +1,10 @@
 import { IsNotEmpty, IsNumberString, IsOptional, IsString } from "class-validator";
-import { EEXCHANGE_NAMES } from "src/order-book/enums/exchange-names.enum";
+import { EXCHANGE_NAMES } from "src/order-book/enums/exchange-names.enum";
 
 export class getOrderBookDto {
   @IsNotEmpty()
   @IsString()
-  exchange: EEXCHANGE_NAMES;
+  exchange: EXCHANGE_NAMES;
 
   @IsNotEmpty()
   @IsString()

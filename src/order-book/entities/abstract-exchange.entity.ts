@@ -1,6 +1,12 @@
-import { IOrderBookModel } from "../interfaces/order-book.interface";
 
-export abstract class AbstractOrderBookModel<T> implements IOrderBookModel {
+export interface IOrderBookEntity {
+  timestamp: number;
+  bids: Array<[string, string]>;
+  asks: Array<[string, string]>;
+}
+
+// export abstract class AbstractOrderBookEntity<T> implements IOrderBookEntity {
+export abstract class AbstractOrderBookEntity<T> {
   public timestamp: number;
   public bids: Array<[string, string]>;
   public asks: Array<[string, string]>;
